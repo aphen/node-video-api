@@ -1,0 +1,37 @@
+var express = require('express');
+var router = express.Router();
+//var mongoose = require('mongoose');
+//mongoose.Promise = global.Promise;
+var Video = require('../models/videos');
+
+/* GET home page. */
+router.get('/', function(req, res, next) {
+    //var db = mongoose.connection;
+    Video.find({}, (err, videos)=>{
+        if(err) throw err;
+        res.json(videos);
+    })
+});
+router.post('/', function(req, res, next) {
+    //var db = mongoose.connection;
+    Video.create(req.body, (err, video) => {
+        if(err) return next(err);
+        res.json(video);
+    });
+});
+router.put('/:id', function(req, res, next) {
+    //var db = mongoose.connection;
+    console.log(req.params.id);
+    Video.findByIdAndUpdate(req.params.id, req.body, (err, video) => {
+        if(err) return next(err);
+        res.json(video);
+    });
+});
+router.delete('/:id', function(req, res, next) {
+    //var db = mongoose.connection;
+    Video.findByIdAndRemove(req.params.id, (err, video) => {
+        if(err) return next(err);
+        res.json(video);
+    });
+});
+module.exports = router;
