@@ -14,6 +14,8 @@ router.get('/', function(req, res, next) {
 });
 router.post('/', function(req, res, next) {
     //var db = mongoose.connection;
+    req.body.id = Date.now();
+    console.log(req.body);
     Video.create(req.body, (err, video) => {
         if(err) return next(err);
         res.json(video);
@@ -27,8 +29,9 @@ router.put('/:id', function(req, res, next) {
         res.json(video);
     });
 });
-router.delete('/:id', function(req, res, next) {
+router.delete('/', function(req, res, next) {
     //var db = mongoose.connection;
+    console.log(req.params, req.body);
     Video.findByIdAndRemove(req.params.id, (err, video) => {
         if(err) return next(err);
         res.json(video);
