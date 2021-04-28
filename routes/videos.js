@@ -27,9 +27,9 @@ router.put('/:id', function(req, res, next) {
         res.json(video);
     });
 });
-router.delete('/:id', function(req, res, next) {
+router.delete('/', function(req, res, next) {
     //var db = mongoose.connection;
-    Video.findByIdAndRemove(req.params.id, (err, video) => {
+    Video.findByIdAndRemove(req.query.id, (err, video) => {
         if(err) return next(err);
         res.json(video);
     });
