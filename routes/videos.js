@@ -14,6 +14,7 @@ router.get('/', function(req, res, next) {
 });
 router.post('/', function(req, res, next) {
     //var db = mongoose.connection;
+    req.body.id = Date.now();
     Video.create(req.body, (err, video) => {
         if(err) return next(err);
         res.json(video);
@@ -21,7 +22,7 @@ router.post('/', function(req, res, next) {
 });
 router.put('/:id', function(req, res, next) {
     //var db = mongoose.connection;
-    console.log(req.params.id);
+    console.log(req.params.id, req.body);
     Video.findByIdAndUpdate(req.params.id, req.body, (err, video) => {
         if(err) return next(err);
         res.json(video);
