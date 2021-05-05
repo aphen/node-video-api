@@ -32,7 +32,7 @@ router.put('/:id', function(req, res, next) {
 router.delete('/', function(req, res, next) {
     //var db = mongoose.connection;
     console.log(req.params, req.body);
-    Video.findByIdAndRemove(req.params.id, (err, video) => {
+    Video.findByIdAndRemove(req.query.id, (err, video) => {
         if(err) return next(err);
         res.json(video);
     });
