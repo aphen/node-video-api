@@ -11,6 +11,7 @@ var videosRouter = require('./routes/videos');
 var app = express();
 var mongoose = require('mongoose');
 
+mongoose.set('useFindAndModify', false);
 mongoose.connect('mongodb://localhost/vidzy')
     .then(() => { console.log('connection successful') })
     .catch((err) => { console.log(err) });
@@ -40,7 +41,7 @@ app.all("*", function (req, res, next) {
 });
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/api/users', usersRouter);
 app.use('/api/videos', videosRouter);
 
 // catch 404 and forward to error handler
