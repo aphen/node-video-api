@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/user');
+const jwt = require('jsonwebtoken');
+const SECRET = 'qwert';
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -24,12 +26,24 @@ router.post('/login', function(req, res, next) {
         }, 
         function(error, result) {
             console.log(result);
+
             if(error){
                 return next(error);
             }
-            if(result.password === req.body.password){
+
+            const isPasswordValid = require('bcryptjs').compareSync(
+                req.body.password,
+                result.password
+            )
+
+            if(isPasswordValid){
+                const token = jwt.sign({
+                    id: String(result._id)
+                },SECRET);
+
                  res.json({
                     status: 0,
+                    token,
                     msg: '成功'
                 });
             } else {

@@ -6,7 +6,13 @@ let userSchema = new mongoose.Schema({
         unique: true,
         require: true
     },
-    password: String,
+    password:{
+        type: String,
+        set(val){
+            // 通过bcryptjs对密码加密返回值 第一个值返回值， 第二个密码强度
+            return require('bcryptjs').hashSync(val,10)
+        }
+    },
     updated_at: {
         type: Date,
         default: Date.now
