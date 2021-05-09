@@ -3,12 +3,14 @@ const router = express.Router();
 const User = require('../models/user');
 const jwt = require('jsonwebtoken');
 const SECRET = 'qwert';
+const token = require('../utils/token');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
 router.post('/login', function(req, res, next) {
+    console.log(req.body);
     if(req.userName === ''){
         res.json({
             status: 40002,
@@ -22,7 +24,7 @@ router.post('/login', function(req, res, next) {
     }
     User.findOne(
         {
-            userName: req.body.userName
+            username: req.body.username
         }, 
         function(error, result) {
             console.log(result);
@@ -37,13 +39,15 @@ router.post('/login', function(req, res, next) {
             )
 
             if(isPasswordValid){
-                const token = jwt.sign({
-                    id: String(result._id)
-                },SECRET);
+                // const token = jwt.sign({
+                //     id: String(result._id)
+                // },SECRET);
 
                  res.json({
                     status: 0,
-                    token,
+                    token: token.encrypt({
+                        id: String(result._id)
+                    }),
                     msg: '成功'
                 });
             } else {
