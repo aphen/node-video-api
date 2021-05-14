@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
-let tokenYZ = async (req, res, next) => {
+let tokenYZ = async function(req, res, next){
+    console.log(req.headers);
     const token = String(req.headers.authorization || " ").split(' ').pop()
     if (!token) {
         res.status(401).send("token不能为空")
@@ -76,3 +77,5 @@ let tokenYZ = async (req, res, next) => {
         return;
     }
 }
+
+module.exports = tokenYZ;

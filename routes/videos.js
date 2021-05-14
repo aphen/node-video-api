@@ -3,16 +3,17 @@ var router = express.Router();
 //var mongoose = require('mongoose');
 //mongoose.Promise = global.Promise;
 var Video = require('../models/videos');
+const tokenYZ = require('../utils/checkToken');
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.get('/', tokenYZ, function(req, res, next) {
     //var db = mongoose.connection;
     Video.find({}, (err, videos)=>{
         if(err) throw err;
         res.json(videos);
     })
 });
-router.post('/', function(req, res, next) {
+router.post('/', tokenYZ, function(req, res, next) {
     //var db = mongoose.connection;
     req.body.id = Date.now();
     console.log(req.body);
@@ -21,7 +22,7 @@ router.post('/', function(req, res, next) {
         res.json(video);
     });
 });
-router.put('/:id', function(req, res, next) {
+router.put('/:id', tokenYZ, function(req, res, next) {
     //var db = mongoose.connection;
     console.log(req.params.id, req.body);
     Video.findByIdAndUpdate(req.params.id, req.body, (err, video) => {

@@ -48,6 +48,7 @@ router.post('/login', function(req, res, next) {
                     token: token.encrypt({
                         id: String(result._id)
                     }),
+                    
                     msg: '成功'
                 });
             } else {
