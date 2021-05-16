@@ -9,6 +9,7 @@ const tokenYZ = require('../utils/checkToken');
 router.get('/', tokenYZ, function(req, res, next) {
     //var db = mongoose.connection;
     Video.find({}, (err, videos)=>{
+        console.log('videos')
         if(err) throw err;
         res.json(videos);
     })

@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
-let tokenYZ = async function(req, res, next){
-    console.log(req.headers);
+let tokenYZ = async function (req, res, next) {
+    
     const token = String(req.headers.authorization || " ").split(' ').pop()
     if (!token) {
         res.status(401).send("token不能为空")
@@ -9,29 +9,33 @@ let tokenYZ = async function(req, res, next){
     }
     //app.get('secret')
     let con = await jwt.verify(token, 'qwert');
+    console.log(con);
+    // try {
+    //     return {
+    //         id: con.id,
+    //         token: true
+    //     }
+    // }
+    // catch (err) {
+    //     console.log(err);
+    //     if (err.name == 'TokenExpiredError') {//token过期
+    //         let str = {
+    //             iat: 1,
+    //             exp: 0,
+    //             msg: 'token过期'
+    //         }
+    //         return str;
+    //     } else if (err.name == 'JsonWebTokenError') {//无效的token
+    //         let str = {
+    //             iat: 1,
+    //             exp: 0,
+    //             msg: '无效的token'
+    //         }
+    //         return str;
+    //     }
+    // }
 
-    try {
-        return {
-          id: con._id,
-          token: true
-        }
-      } catch (err) {
-        if (err.name == 'TokenExpiredError') {//token过期
-            let str = {
-                iat: 1,
-                exp: 0,
-                msg: 'token过期'
-            }
-            return str;
-        } else if (err.name == 'JsonWebTokenError') {//无效的token
-            let str = {
-                iat: 1,
-                exp: 0,
-                msg: '无效的token'
-            }
-            return str;
-        }
-      }
+
     // jwt.verify(token, app.get('secret'), (err, decoded) => {
     //     if (err) {
     //         console.log(err);
@@ -73,8 +77,9 @@ let tokenYZ = async function(req, res, next){
 
         await next();
     } else {
+        console.log('3333')
         res.status(401).send(con.msg)
-        return;
+        return next();
     }
 }
 
