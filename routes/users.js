@@ -10,7 +10,7 @@ router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
 router.post('/login', function(req, res, next) {
-    console.log(req.body);
+   
     if(req.userName === ''){
         res.json({
             status: 40002,
@@ -27,7 +27,7 @@ router.post('/login', function(req, res, next) {
             username: req.body.username
         }, 
         function(error, result) {
-            console.log(result);
+            console.log(error, result);
 
             if(error){
                 return next(error);
@@ -60,7 +60,6 @@ router.post('/login', function(req, res, next) {
            
         }
     );
-    console.log(req.body);
 });
 router.post('/logout', function(req, res, next){
     
