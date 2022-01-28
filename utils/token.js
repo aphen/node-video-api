@@ -30,7 +30,7 @@ let decrypt = (token) => {
   try {
     let data = jwt.verify(token, 'qwert');
     return {
-      id: data._id,
+      ...data,
       token: true
     }
   } catch (err) {

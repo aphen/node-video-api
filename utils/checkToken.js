@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
+const { decrypt } = require('./token');
 let tokenYZ = async function (req, res, next) {
     
     const token = String(req.headers.authorization || " ").split(' ').pop()
@@ -9,9 +10,9 @@ let tokenYZ = async function (req, res, next) {
     }
     //app.get('secret')
     let con;
-    console.log(con);
     try {
-        con = await jwt.verify(token, 'qwert');
+        // con = await jwt.verify(token, 'qwert');
+        con = decrypt(token);
         // return {
         //     id: con.id,
         //     token: true
@@ -60,8 +61,6 @@ let tokenYZ = async function (req, res, next) {
     //     }
     // })
 
-
-    console.log(con);
     if (con.iat < con.exp) {//开始时间小于结束时间，代表token还有效
         const { id } = con    //token解码后是否存在id，此id在生成token时已定义好
         if (!id) {

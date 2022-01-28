@@ -22,22 +22,24 @@ router.post('/login', function(req, res, next) {
             errMsg: '密码不能为空!'
         })
     }
+
     User.findOne(
         {
             username: req.body.username
         }, 
         function(error, result) {
-            console.log(error, result);
+            console.log(error, result, '?????');
 
             if(error){
                 return next(error);
             }
 
+            console.log(req.body.password, result.password)
             const isPasswordValid = require('bcryptjs').compareSync(
                 req.body.password,
                 result.password
             )
-
+            
             if(isPasswordValid){
                 // const token = jwt.sign({
                 //     id: String(result._id)

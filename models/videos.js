@@ -5,6 +5,7 @@ var VideosSchema = new mongoose.Schema({
     age: Number,
     genre: String,
     address: String,
+    filePath: Array,
     updated_at: {
         type: Date,
         default: Date.now
