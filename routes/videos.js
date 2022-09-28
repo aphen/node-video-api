@@ -28,6 +28,7 @@ let body = [];
 let chunk = "";
 router.get("/", function (req, res, next) {
   console.log("req");
+  
   //   const options = {
   //     hostname: "10.80.31.26",
   //     port: "8765",
@@ -91,7 +92,7 @@ router.delete("/", function (req, res, next) {
 });
 router.post("/upload", upload.array("files[]", 12), function (req, res, next) {
   //var db = mongoose.connection;
-  console.log(req, res);
+  console.log(req.protocol + "://" + req.get("host"))
   const filePaths = [];
   req.files.forEach((item) => {
       filePaths.push({ url: '/uploads/' + item.filename })
