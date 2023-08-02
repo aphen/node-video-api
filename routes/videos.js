@@ -77,10 +77,16 @@ router.post("/", function (req, res, next) {
 router.put("/:id", function (req, res, next) {
   //var db = mongoose.connection;
   console.log(req.params.id, req.body);
-  Video.findByIdAndUpdate(req.params.id, req.body, (err, video) => {
+  Video.updateOne({id: req.params.id}, req.body, (err, video) => {
+    console.log(err, video)
     if (err) return next(err);
     res.json(video);
   });
+  // Video.findByIdAndUpdate(req.params.id, req.body, (err, video) => {
+  //   console.log(err, video)
+  //   if (err) return next(err);
+  //   res.json(video);
+  // });
 });
 router.delete("/", function (req, res, next) {
   //var db = mongoose.connection;

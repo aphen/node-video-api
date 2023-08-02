@@ -17,7 +17,7 @@ var mongoose = require("mongoose");
 
 mongoose.set("useFindAndModify", false);
 mongoose
-  .connect("mongodb://localhost/vidzy")
+  .connect("mongodb://127.0.0.1:27017/vidzy")
   .then(() => {
     console.log("connection successful");
   })
