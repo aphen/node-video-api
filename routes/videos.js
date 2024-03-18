@@ -106,4 +106,15 @@ router.post("/upload", upload.array("files[]", 12), function (req, res, next) {
   res.json({filePaths})
 });
 
+// 实现文件下载功能
+router.get("/download", function (req, res, next) {
+    // 实现文件下载功能
+    const filePath = path.join(__dirname, 'files/example.txt');
+    const fileName = 'example.txt';
+    const fileStream = fs.createReadStradm(filePath);
+    res.setHeader('Content-disposition', `attachment;filename=${fileName}`);
+    res.setHeader('Content-type', 'text/plain');
+    fileStream.pipe(res);
+});
+
 module.exports = router;
