@@ -10,11 +10,13 @@
     <h1>SSE Demo</h1>
     <button onclick="connectSSE()">建立 SSE 连接</button>
     <button onclick="closeSSE()">断开 SSE 连接</button>
+    <button onclick="connectWS()">建立 WS 连接</button>
     <br />
     <br />
     <div id="message"></div>
 
     <script>
+      // import WebSocket from "ws";
       console.log("eventSource");
       const messageElement = document.getElementById("message");
 
@@ -47,6 +49,27 @@
         eventSource.close();
         messageElement.innerHTML += `SSE 连接关闭，状态${eventSource.readyState}<br />`;
       };
+      function connectWS() {
+        // WebSocket
+        const socket = new WebSocket("ws://localhost:8080");
+        console.log("socket", socket);
+        // 当连接成功打开时
+        socket.addEventListener("open", (event) => {
+          console.log("Connected to server!");
+        });
+
+        // 接收服务器推送的消息
+        socket.addEventListener("message", (event) => {
+          const data = JSON.parse(event.data);
+          console.log(`Received: ${data.time}`);
+          // 在这里处理接收到的数据并更新页面内容
+        });
+
+        // 当连接关闭时
+        socket.addEventListener("close", (event) => {
+          console.log("Disconnected from server");
+        });
+      }
     </script>
   </body>
 </html>
