@@ -42,14 +42,13 @@ router.get('/sse', function(req, res, next) {
   })
 })
 
-router.get('/ws', function(req, res, next) {
+// router.get('/ws', function(req, res, next) {
   
   const wss = new Websocket.Server({ port: 8080 });
-  console.log(req);
     wss.on('connection', function(ws) {
-      console.log('开启连接', ws);
+      console.log('开启连接');
       function send(data) {
-        if(ws.readyState ===  websocket.OPEN){
+        if(ws.readyState ===  Websocket.OPEN){
           ws.send(data);
         } else {
           console.log('连接已关闭')
@@ -73,11 +72,11 @@ router.get('/ws', function(req, res, next) {
   // 示例：定时发送数据给所有已连接的客户端
   setInterval(() => {
     wss.clients.forEach((client) => {
-      if (client.readyState === WebSocket.OPEN) {
+      if (client.readyState === Websocket.OPEN) {
         client.send(JSON.stringify({ time: new Date().toISOString() }));
       }
     });
   }, 5000); // 每5秒发送一次当前时间
-});
+// });
 
 module.exports = router;
